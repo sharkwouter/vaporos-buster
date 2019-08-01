@@ -77,6 +77,9 @@ createbasechroot ( ) {
 	if [ ! -d ${BUILD} ]; then
 		echo "Error: ${BUILD} directory not found, run gen.sh first"
 	fi
+	base_include="${BUILD}/.disk/base_include"
+	base_exclude="${BUILD}/.disk/base_exclude"
+
 	components=""
 	for component in `cat ${BUILD}/.disk/base_components`; do
 		if [ "${component}" == "main" ]; then
@@ -87,16 +90,29 @@ createbasechroot ( ) {
 	done
 
 	includes=""
-	for include in `cat ${BUILD}/.disk/base_include`; do
-		includes="${includes},${include}"
-	done
+	if [ -f ${base_include} ]; then
+		for include in `cat ${base_include}`; do
+			includes="${includes},${include}"
+			if [ "${include}" == "$(head -1 ${base_include})" ]; then
+				includes="--include=${include}"
+			else
+				includes="${includes},${include}"
+			fi
+		done
+	fi
 
 	excludes=""
-	for exclude in `cat ${BUILD}/.disk/base_exclude`; do
-		excludes="${excludes},${exclude}"
-	done
+	if [ -f ${base_exclude} ]; then
+		for exclude in `cat ${base_exclude}`; do
+			if [ "${exclude}" == "$(head -1 ${base_exclude})" ]; then
+				excludes="--exclude=${exclude}"
+			else
+				excludes="${excludes},${exclude}"
+			fi
+		done
+	fi
 
-	/usr/sbin/debootstrap --components=${components} --resolve-deps --include=${includes} --exclude=${excludes} --no-check-gpg buster chroot file://${BUILD}
+		/usr/sbin/debootstrap --components=${components} --resolve-deps ${includes} ${excludes} --no-check-gpg buster chroot file://${BUILD}
 }
 
 #Fininishing touches to the chroot
