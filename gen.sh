@@ -30,7 +30,7 @@ MD5SUMFILE="MD5SUMS"
 
 # ISO info:
 DISTNAME="buster"
-ISONAME="vaporos-latest.iso"
+ISONAME="vaporos-buster.iso"
 ISOVNAME="VaporOS"
 ISODESCRIPTION="VaporOS distribution based on Debian 10.0 Buster"
 
@@ -170,6 +170,10 @@ createbuildroot ( ) {
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${PACKAGES}/*.deb > /dev/null #This adds packages from the pool directory
 	rm -rf ${BUILD}/poolbase ${BUILD}/db ${BUILD}/conf
 	
+	#Copy additions directory
+	echo "Copying configuration files"
+	rsync -av ${ADDITIONSPATH}/ ${BUILD}/
+
 	#Execute on the config
 	#Everything under install will be added to the default.preseed for installation
 	install=$(grep '^install' ${PACKAGECONFIG}|cut -d"=" -f2)
