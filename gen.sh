@@ -164,7 +164,7 @@ createbuildroot ( ) {
 	mv ${BUILD}/pool ${BUILD}/poolbase
 	rm -rf ${BUILD}/dists
 	mkdir ${BUILD}/conf
-	/bin/echo -e "Origin: Valve Software LLC\nSuite: testing\nCodename: ${DISTNAME}\nComponents: main contrib non-free\nUDebComponents: main\nArchitectures: i386 amd64\nDescription: ${ISODESCRIPTION}\nContents: udebs . .gz\nUDebIndices: Packages . .gz" > ${BUILD}/conf/distributions
+	/bin/echo -e "Origin: ${ISOVNAME}\nLabel:${ISOVNAME}\nSuite: stable\nCodename: ${DISTNAME}\nComponents: main contrib non-free\nUDebComponents: main\nArchitectures: i386 amd64\nDescription: ${ISODESCRIPTION}\nContents: udebs . .gz\nUDebIndices: Packages . .gz" > ${BUILD}/conf/distributions
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${BUILD}/poolbase/*/*/*/*.deb > /dev/null
 	reprepro -Vb ${BUILD} includeudeb ${DISTNAME} ${BUILD}/poolbase/*/*/*/*.udeb > /dev/null
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${PACKAGES}/*.deb > /dev/null #This adds packages from the pool directory
@@ -259,7 +259,7 @@ deps
 #Replace ${BUILD} with an empty directory
 scratch
 
-#Download the ISO from Valve's website
+#Download the base ISO
 download
 
 #Extract the ISO into ${BUILD}
