@@ -18,7 +18,7 @@ cd "$(dirname "$0")"
 # Directories:
 BUILD="${PWD}/buildroot"
 WORKDIR="${PWD}"
-CONFIG="${PWD}/config"
+PACKAGECONFIG="${PWD}/package-config"
 PACKAGES="${PWD}/packages"
 ISOPATH=${WORKDIR}
 
@@ -169,11 +169,11 @@ createbuildroot ( ) {
 	
 	#Execute on the config
 	#Everything under install will be added to the default.preseed for installation
-	install=$(grep '^install' ${CONFIG}|cut -d"=" -f2)
+	install=$(grep '^install' ${PACKAGECONFIG}|cut -d"=" -f2)
 	sed -i "/steamos\-autoupdate/ s/$/ ${install}/" ${BUILD}/default.preseed
 	
 	#Make symlinks based on the firmwares mentioned in the config
-	firmware=$(grep '^firmware' ${CONFIG}|cut -d"=" -f2)
+	firmware=$(grep '^firmware' ${PACKAGECONFIG}|cut -d"=" -f2)
 	echo "Creating firmware symlinks..."
 	for f in ${firmware}; do
 		package="$(find buildroot/pool/ -name ${f}_*_*.deb|head -1)"
