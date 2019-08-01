@@ -26,3 +26,16 @@ These are deviations from SteamOS which have been made on purpose:
  - The amdgpu-pro-firmware package hasn't been included yet. It isn't available in the Debian repository.
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on.
+
+## Packages which will need porting
+
+For this project to work out a number of packages will need to be ported to VaporOS Buster. This part contains per source which package those are.
+
+### base\_include
+
+- plymouth-themes-steamos
+- steamos-base-files
+- steamos-compositor
+- steamos-modeswitch-inhibitor
+- valve-archive-keyring
+- valve-wallpapers
