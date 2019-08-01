@@ -102,7 +102,13 @@ createbasechroot ( ) {
 #Fininishing touches to the chroot
 finishchroot ( ) {
 	echo "deb http://deb.debian.org/debian/ buster main contrib non-free" > ${CHROOTPATH}/etc/apt/sources.list
+	chroot ${CHROOTPATH} dpkg --add-architecture i386
 	chroot ${CHROOTPATH} apt-get update
+	chroot ${CHROOTPATH} apt-get autoclean
+	#chroot ${CHROOTPATH} apt-get install -y locales
+	#sed -i 's/#\( en_US\.UTF-8\)/\1/' ${CHROOTPATH}/etc/locale.gen
+	#chroot ${CHROOTPATH} locale-gen
+	echo "KEYMAP=us" > ${CHROOTPATH}/etc/vconsole.conf
 }
 
 ###########
