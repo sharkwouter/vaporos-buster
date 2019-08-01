@@ -1,3 +1,6 @@
+broadcom-sta-dkms
+curl
+dkms
 firmware-adi
 firmware-atheros
 firmware-bnx2
@@ -11,3 +14,7 @@ firmware-linux-free
 firmware-linux-nonfree
 firmware-ralink
 firmware-realtek
+plymouth
+plymouth-themes
+sudo
+unattended-upgrades
