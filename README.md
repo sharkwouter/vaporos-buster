@@ -2,6 +2,16 @@
 
 Valve hasn't released SteamOS based on Buster yet, so here is a test to see if it can be done without their help.
 
+## Generating the ISO
+
+Generating the ISO can be done with ``./gen.sh``. It will tell you if you are missing any dependencies.
+
+The ``gen.sh`` script downloads the base iso, extracts it, makes some changes and repackages it. It can be modified to work with any Debian based distribution.
+
+## Testing the base installation
+
+To test if the installer would succeed in the base installation the ``create-chroot.sh`` script can be run. This creates a chroot based on the buildroot directory. Make sure you run ``gen.sh`` before running this script. It has to be run as root.
+
 ## Currently implemented features
 
 Currently the following features have been implemented:
