@@ -16,10 +16,11 @@ cd "$(dirname "$0")"
 # Basic variables #
 ###################
 # Directories:
-BUILD="${PWD}/buildroot"
 WORKDIR="${PWD}"
-PACKAGECONFIG="${PWD}/package-config"
-PACKAGES="${PWD}/packages"
+BUILD="${WORKDIR}/buildroot"
+PACKAGECONFIG="${WORKDIR}/package-config"
+PACKAGES="${WORKDIR}/packages"
+ADDITIONSPATH="${WORKDIR}/additions"
 ISOPATH=${WORKDIR}
 
 # Base ISO:
@@ -28,9 +29,10 @@ STEAMINSTALLFILE="debian-10.0.0-amd64-i386-netinst.iso"
 MD5SUMFILE="MD5SUMS"
 
 # ISO info:
-DISTNAME="brewmaster"
+DISTNAME="buster"
 ISONAME="vaporos-latest.iso"
 ISOVNAME="VaporOS"
+ISODESCRIPTION="VaporOS distribution based on Debian 10.0 Buster"
 
 # Other info:
 DEPS="xorriso lftp 7z rsync reprepro wget"
@@ -43,7 +45,7 @@ usage ( )
 {
 	cat <<EOF
 	$0 [OPTION]
-	-h        Print this message
+	-h		  Print this message
 	-d		  Re-Download ${STEAMINSTALLFILE}
 	-n		  Set the name for the iso
 EOF
@@ -62,6 +64,16 @@ deps ( ) {
 	done
 	if test "`expr length \"$ISOVNAME\"`" -gt "32"; then
 		echo "Volume ID is more than 32 characters: ${ISOVNAME}"
+		exit 1
+	fi
+	
+	#Make sure isohdpfx.bin exists
+	if [ -f "isohdpfx.bin" ]; then
+		SYSLINUX="isohdpfx.bin"
+	elif [ -f "/usr/lib/ISOLINUX/isohdpfx.bin" ]; then
+		SYSLINUX="/usr/lib/ISOLINUX/isohdpfx.bin"
+	else
+		echo "Error: isohdpfx.bin not found! Try putting it in ${WORKDIR}."
 		exit 1
 	fi
 }
@@ -152,20 +164,11 @@ createbuildroot ( ) {
 	mv ${BUILD}/pool ${BUILD}/poolbase
 	rm -rf ${BUILD}/dists
 	mkdir ${BUILD}/conf
-	/bin/echo -e "Origin: Valve Software LLC\nSuite: testing\nCodename: ${DISTNAME}\nComponents: main contrib non-free\nUDebComponents: main\nArchitectures: i386 amd64\nDescription: SteamOS distribution based on Debian 8.0 Jessie\nContents: udebs . .gz\nUDebIndices: Packages . .gz" > ${BUILD}/conf/distributions
+	/bin/echo -e "Origin: Valve Software LLC\nSuite: testing\nCodename: ${DISTNAME}\nComponents: main contrib non-free\nUDebComponents: main\nArchitectures: i386 amd64\nDescription: ${ISODESCRIPTION}\nContents: udebs . .gz\nUDebIndices: Packages . .gz" > ${BUILD}/conf/distributions
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${BUILD}/poolbase/*/*/*/*.deb > /dev/null
 	reprepro -Vb ${BUILD} includeudeb ${DISTNAME} ${BUILD}/poolbase/*/*/*/*.udeb > /dev/null
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${PACKAGES}/*.deb > /dev/null #This adds packages from the pool directory
 	rm -rf ${BUILD}/poolbase ${BUILD}/db ${BUILD}/conf
-	
-	#Find isohdpfx.bin, used for booting?
-	if [ -f "isohdpfx.bin" ]; then
-		SYSLINUX="isohdpfx.bin"
-	fi
-	if [ -z $SYSLINUX ]; then
-		echo "Error: isohdpfx.bin not found! Try putting it in ${pwd}."
-		exit 1	
-	fi
 	
 	#Execute on the config
 	#Everything under install will be added to the default.preseed for installation
