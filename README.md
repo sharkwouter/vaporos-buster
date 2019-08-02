@@ -24,7 +24,6 @@ Currently the following features have been implemented:
 These are deviations from SteamOS which have been made on purpose:
 
  - The amdgpu-pro-firmware package hasn't been included yet. It isn't available in the Debian repository.
- - The libtxc-dxtn-s2tc0 package hasn't been included yet. It isn't available in the Debian repository.
  - The lightdm package will need to be moved to the default.preseed. It causes debootstrap to fail otherwise.
  - The i965-va-driver package will need to be moved to the defauld.preseed. It causes debootstrap to fail otherwise.
  - The dkms package will need to be moved to the default.preseed. It causes debootstrap to fail otherwise. This one I don't understand, I've had build which worked with this one.
@@ -37,6 +36,7 @@ These packages have no use for VaporOS and will not be included at all:
  - actkbd
  - valve-wallpapers
  - valve-archive-keyring
+ - libtxc-dxtn-s2tc0
 
 ## Packages which will need porting
 
