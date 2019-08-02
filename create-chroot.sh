@@ -20,6 +20,7 @@ cd "$(dirname "$0")"
 WORKDIR="${PWD}"
 BUILD="${WORKDIR}/buildroot"
 CHROOTPATH="${WORKDIR}/chroot"
+DISTNAME="buster"
 
 # Other info:
 DEPS="debootstrap"
@@ -112,7 +113,7 @@ createbasechroot ( ) {
 		done
 	fi
 
-		/usr/sbin/debootstrap --components=${components} --resolve-deps ${includes} ${excludes} --no-check-gpg buster chroot file://${BUILD}
+		/usr/sbin/debootstrap --components=${components} --resolve-deps ${includes} ${excludes} --no-check-gpg ${DISTNAME} ${CHROOTPATH} file://${BUILD}
 }
 
 #Fininishing touches to the chroot
