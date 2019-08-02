@@ -32,6 +32,12 @@ These are deviations from SteamOS which have been made on purpose:
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on.
 
+These packages have no use for VaporOS and will not be included at all:
+
+ - actkbd
+ - valve-wallpapers
+ - valve-archive-keyring
+
 ## Packages which will need porting
 
 For this project to work out a number of packages will need to be ported to VaporOS Buster. This part contains per source which package those are.
@@ -42,5 +48,3 @@ For this project to work out a number of packages will need to be ported to Vapo
 - steamos-base-files
 - steamos-compositor
 - steamos-modeswitch-inhibitor
-- valve-archive-keyring
-- valve-wallpapers
