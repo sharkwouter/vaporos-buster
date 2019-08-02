@@ -51,10 +51,10 @@ d-i netcfg/get_hostname string steamos
 
 ### Mirror settings
 # If you select ftp, the mirror/country string does not need to be set.
-#d-i mirror/protocol string ftp
+#d-i mirror/protocol string http
 d-i mirror/country string manual
-d-i mirror/http/hostname string steamos-repo.valvesoftware.com
-d-i mirror/http/directory string /SteamOS
+d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
 # Suite to install.
@@ -66,7 +66,7 @@ d-i mirror/http/proxy string
 d-i passwd/root-login boolean false
 
 # To create a normal user account.
-d-i passwd/user-fullname string SteamOS Desktop
+d-i passwd/user-fullname string VaporOS Desktop
 d-i passwd/username string desktop
 # User's password, either encrypted or in clear text
 # d-i passwd/user-password-crypted password \$1\$CAe/kArK\$dTflLRhLU4U73lBWvrTnw.
@@ -100,8 +100,8 @@ d-i apt-setup/services-select string
 #d-i apt-setup/volatile_host string volatile.debian.org
 
 # Additional repositories, local[0-9] available
-d-i apt-setup/local0/repository string http://repo.steampowered.com/steamos brewmaster main contrib non-free
-d-i apt-setup/local0/comment string internal SteamOS repo
+d-i apt-setup/local0/repository string http://deb.debian.org/debian buster main contrib non-free
+d-i apt-setup/local0/comment string internal Debian Buster repo
 # Enable deb-src lines
 d-i apt-setup/local0/source boolean true
 # URL to the public key of the local repository; you must provide a key or
@@ -115,8 +115,8 @@ d-i apt-setup/local0/source boolean true
 # d-i debian-installer/allow_unauthenticated boolean true
 
 # Individual additional packages to install
-d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 steamos-modeswitch-inhibitor:i386 steam:i386 nvidia-vdpau-driver:i386 libtxc-dxtn-s2tc0:i386 steamos-packages:i386 \
-        steamos-packages:amd64 libnvidia-encode1:amd64 steamos-modeswitch-inhibitor:amd64 steamos-autoupdate python-pyftpdlib python-pygame
+d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 \
+        lightdm:amd64 dkms:amd64
 
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade

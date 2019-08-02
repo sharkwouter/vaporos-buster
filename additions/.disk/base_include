@@ -1,6 +1,4 @@
-broadcom-sta-dkms
 curl
-dkms
 firmware-adi
 firmware-atheros
 firmware-bnx2
@@ -14,7 +12,11 @@ firmware-linux-free
 firmware-linux-nonfree
 firmware-ralink
 firmware-realtek
+linux-headers-amd64
+linux-image-amd64
+network-manager
 plymouth
 plymouth-themes
+steam-devices
 sudo
 unattended-upgrades
