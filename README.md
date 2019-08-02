@@ -48,3 +48,9 @@ For this project to work out a number of packages will need to be ported to Vapo
 - steamos-base-files
 - steamos-compositor
 - steamos-modeswitch-inhibitor
+
+## Current issues
+
+Issues which need to be resolved:
+
+ - The steam package doesn't install, because it asks a question.
