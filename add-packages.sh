@@ -65,4 +65,7 @@ docker run --rm -ti -v ${TEMPDIR}:/home/builder/share vaporos-buster-base apt-ge
 mv ${TEMPDIR}/archives/*deb ${TARGETDIR}
 rm -rf ${TEMPDIR}
 
-#
+#Set owner back to the owner of project directory
+owner="$(ls -dl ${WORKDIR}|cut -d' ' -f3)"
+group="$(ls -dl ${WORKDIR}|cut -d' ' -f4)"
+chown -R ${owner}:${group} ${TARGETDIR}
