@@ -115,8 +115,7 @@ d-i apt-setup/local0/source boolean true
 # d-i debian-installer/allow_unauthenticated boolean true
 
 # Individual additional packages to install
-d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 \
-        lightdm:amd64 dkms:amd64
+d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 lightdm:amd64 dkms:amd64
 
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
