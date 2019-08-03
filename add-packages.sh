@@ -96,7 +96,7 @@ getpackages ( ) {
 	include="$(cat ${ADDITIONSDIR}/.disk/base_include)"
 
 	# Get the packages listed in the default.preseed
-	pkgsel="$(grep \"^d-i pkgsel/include\" ${ADDITIONSDIR}/default.preseed|cut -d' ' -f4-)"
+	pkgsel=$(grep "^d-i pkgsel/include" ${ADDITIONSDIR}/default.preseed|cut -d' ' -f4-)
 
 	# Download all packages needed
 	echo "Downloading packages.."
