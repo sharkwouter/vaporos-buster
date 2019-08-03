@@ -4,7 +4,10 @@
 chroot /target adduser --gecos "" --disabled-password steam
 chroot /target usermod -a -G desktop,audio,dip,video,plugdev,netdev,bluetooth,pulse-access steam
 chroot /target usermod -a -G pulse-access desktop
-chroot /target ln -sf /etc/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
+
+# Configure the display manager
+echo "/usr/sbin/lightdm" > /target/etc/X11/default-display-manager
+chroot /target ln -sf /lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
 cat - > /target/usr/share/lightdm/lightdm.conf.d/20_steamos.conf << 'EOF'
 [Seat:*]
 pam-service=lightdm-autologin
