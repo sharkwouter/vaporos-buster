@@ -46,7 +46,7 @@ usage ( )
 	cat <<EOF
 	$0 [OPTION]
 	-h		  Print this message
-	-d		  Re-Download ${STEAMINSTALLFILE}
+	-d		  Only download ${STEAMINSTALLFILE}, then exit
 	-n		  Set the name for the iso
 EOF
 }
@@ -66,7 +66,7 @@ deps ( ) {
 		echo "Volume ID is more than 32 characters: ${ISOVNAME}"
 		exit 1
 	fi
-	
+
 	#Make sure isohdpfx.bin exists
 	if [ -f "isohdpfx.bin" ]; then
 		SYSLINUX="isohdpfx.bin"
@@ -84,48 +84,48 @@ scratch ( ) {
 		echo "Building ${BUILD} from scratch"
 		rm -fr "${BUILD}"
 	fi
-	
+
 	#Create new directory
 	mkdir -p ${BUILD}
 }
 
 #Get the checksum of the current ISO
 getchecksum ( ) {
-    #Get the checksum of the upstream version
-    echo "Upstream checksum:"
-    upstreaminstallermd5sum=$(wget --quiet -O- ${UPSTREAMURL}/${MD5SUMFILE} | grep ${STEAMINSTALLFILE}$ | cut -f1 -d' ')
-    echo ${upstreaminstallermd5sum}
-    
-    #Get the checksum of our version
-    echo "local checksum:"
-    if [ ! -f ${ISOPATH}/${STEAMINSTALLFILE} ]; then
-        echo "No file found"
-        return
-    fi
-    
-    localinstallermd5sum=$(md5sum ${ISOPATH}/${STEAMINSTALLFILE} | cut -f1 -d' ')
-    echo ${localinstallermd5sum}
-    
-    #Return if they are the same
-    [ "${upstreaminstallermd5sum}" = "${localinstallermd5sum}" ]
+	#Get the checksum of the upstream version
+	echo "Upstream checksum:"
+	upstreaminstallermd5sum=$(wget --quiet -O- ${UPSTREAMURL}/${MD5SUMFILE} | grep ${STEAMINSTALLFILE}$ | cut -f1 -d' ')
+	echo ${upstreaminstallermd5sum}
+
+	#Get the checksum of our version
+	echo "local checksum:"
+	if [ ! -f ${ISOPATH}/${STEAMINSTALLFILE} ]; then
+		echo "No file found"
+		return
+	fi
+
+	localinstallermd5sum=$(md5sum ${ISOPATH}/${STEAMINSTALLFILE} | cut -f1 -d' ')
+	echo ${localinstallermd5sum}
+
+	#Return if they are the same
+	[ "${upstreaminstallermd5sum}" = "${localinstallermd5sum}" ]
 }
 
 #Download the iso, if needed
 download ( ) {
-    steaminstallerurl="${UPSTREAMURL}/${STEAMINSTALLFILE}"
-    
-    #Make we have the latest version
-    if getchecksum; then
-        echo "Using existing ${STEAMINSTALLFILE}"
-    else
-        if [ ! -f ${ISOPATH}/${STEAMINSTALLFILE} ]; then
-            echo "The downloaded version doesn't match the upstream version, deleting..."
-            rm ${ISOPATH}/${STEAMINSTALLFILE}
-        fi
-    fi
-    
-    #Download if the iso doesn't exist or the -d flag was passed
-    if [ ! -f ${STEAMINSTALLFILE} ] || [ -n "${redownload}" ]; then
+	steaminstallerurl="${UPSTREAMURL}/${STEAMINSTALLFILE}"
+
+	#Make we have the latest version
+	if getchecksum; then
+		echo "Using existing ${STEAMINSTALLFILE}"
+	else
+		if [ ! -f ${ISOPATH}/${STEAMINSTALLFILE} ]; then
+			echo "The downloaded version doesn't match the upstream version, deleting..."
+			rm ${ISOPATH}/${STEAMINSTALLFILE}
+		fi
+	fi
+
+	#Download if the iso doesn't exist or the -d flag was passed
+	if [ ! -f ${STEAMINSTALLFILE} ] || [ -n "${redownload}" ]; then
 		if [ -f ${STEAMINSTALLFILE} ];then
 			rm ${STEAMINSTALLFILE}
 		fi
@@ -147,7 +147,7 @@ download ( ) {
 
 #Extract the ISO into the ${BUILD} 
 extract ( ) {
-    #Extract SteamOSDVD.iso into BUILD
+	#Extract SteamOSDVD.iso into BUILD
 	if 7z x ${STEAMINSTALLFILE} -o${BUILD}; then
 		:
 	else
@@ -159,7 +159,7 @@ extract ( ) {
 
 #Make changes to ${BUILD}
 createbuildroot ( ) {
-    #Generate our new repos
+	#Generate our new repos
 	echo "Generating pool.."
 	mv ${BUILD}/pool ${BUILD}/poolbase
 	rm -rf ${BUILD}/dists
@@ -169,7 +169,7 @@ createbuildroot ( ) {
 	reprepro -Vb ${BUILD} includeudeb ${DISTNAME} ${BUILD}/poolbase/*/*/*/*.udeb > /dev/null
 	reprepro -Vb ${BUILD} includedeb ${DISTNAME} ${PACKAGES}/*.deb > /dev/null #This adds packages from the pool directory
 	rm -rf ${BUILD}/poolbase ${BUILD}/db ${BUILD}/conf
-	
+
 	#Copy additions directory
 	echo "Copying configuration files"
 	rsync -av ${ADDITIONSPATH}/ ${BUILD}/
@@ -185,7 +185,7 @@ createbuildroot ( ) {
 			exit 1
 		fi
 	done
-	
+
 	#Generate new md5sum.txt for the iso
 	echo "Creating md5sum.txt file" 
 	cd ${BUILD}
@@ -195,12 +195,12 @@ createbuildroot ( ) {
 
 #Generate the ISO from ${BUILD}
 createiso ( ) {
-    #Remove old ISO
+	#Remove old ISO
 	if [ -f ${ISOPATH}/${ISONAME} ]; then
 		echo "Removing old ISO ${ISOPATH}/${ISONAME}"
 		rm -f "${ISOPATH}/${ISONAME}"
 	fi
-	
+
 	#Build the ISO
 	echo "Building ${ISOPATH}/${ISONAME} ..."
 	xorriso -as mkisofs -r -checksum_algorithm_iso md5,sha1,sha256,sha512 \
@@ -228,24 +228,31 @@ createmd5sum ( ) {
 ###########
 #Setup command line arguments
 while getopts "hdn:" OPTION; do
-        case ${OPTION} in
-        h)
-                usage
-                exit 1
-        ;;
-        d)
-                redownload="1"
-        ;;
-        n)
-        	ISOVNAME="${OPTARG}"
-        	ISONAME=$(echo "${OPTARG}.iso"|tr '[:upper:]' '[:lower:]'|tr "\ " "-")
-        ;;
-        *)
-                echo "${OPTION} - Unrecongnized option"
-                usage
-                exit 1
-        ;;
-        esac
+	case ${OPTION} in
+	h)
+		usage
+		exit 1
+	;;
+	d)
+		if which "lftp" >/dev/null 2>&1; then
+			:
+		else
+			echo "Missing dependency: lftp"
+			exit 1
+		fi
+		download
+		exit 0
+	;;
+	n)
+		ISOVNAME="${OPTARG}"
+		ISONAME=$(echo "${OPTARG}.iso"|tr '[:upper:]' '[:lower:]'|tr "\ " "-")
+	;;
+	*)
+		echo "${OPTION} - Unrecongnized option"
+		usage
+		exit 1
+	;;
+	esac
 done
 
 #############
