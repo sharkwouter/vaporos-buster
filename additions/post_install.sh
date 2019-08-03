@@ -42,6 +42,13 @@ then
     done
   fi
 
+  gnome-terminal -- sudo /usr/bin/install_steam.sh
+
+  # Wait for the steam installation to finish
+  while [ -f /usr/bin/install_steam.sh ]; do
+    sleep 1
+  done
+
   # dummy file to skip the Steam Install Agreement dialog
   touch ~/.steam/steam_install_agreement.txt
   # pass -exitsteam so steam doesn't actually run after bootstrapping
@@ -55,7 +62,6 @@ dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accou
 dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User1001 org.freedesktop.Accounts.User.SetXSession string:steamos
 systemctl enable build-dkms
 (for i in `dkms status | cut -d, -f1-2 | tr , / | tr -d ' '`; do sudo dkms remove $i --all; done) | zenity --progress --no-cancel --pulsate --auto-close --text="Configuring Kernel Modules" --title="SteamOS Installation"
-#plymouth-set-default-theme -R steamos
 update-grub
 grub-set-default 0
 passwd --delete desktop
@@ -71,8 +77,26 @@ chmod +x /target/usr/bin/post_logon.sh
 echo ALL ALL=NOPASSWD: /usr/bin/post_logon.sh > /target/etc/sudoers.d/post_logon
 
 #
+# Add steam installation script
+#
+cat - > /target/usr/bin/install_steam.sh << 'EOF'
+#! /bin/bash
+echo "Installing Steam.."
+apt-get update && apt-get install -y steam
+rm /etc/sudoers.d/install_steam
+rm /usr/bin/install_steam.sh
+EOF
+chmod +x /target/usr/bin/install_steam.sh
+
+#
+# Enable anyone to sudo the steam installation script
+#
+echo ALL ALL=NOPASSWD: /usr/bin/install_steam.sh > /target/etc/sudoers.d/install_steam
+
+#
 # Set post logon to run at the first logon
 #
+mkdir -p /target/home/steam/.config/autostart/
 cat - > /target/home/steam/.config/autostart/post_logon.desktop << 'EOF'
 [Desktop Entry]
 Type=Application
