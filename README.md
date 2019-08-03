@@ -1,12 +1,22 @@
 # VaporOS Buster
 
-Valve hasn't released SteamOS based on Buster yet, so here is a test to see if it can be done without their help.
+Valve hasn't released SteamOS based on Buster yet, so here is a test to see if it can be done without Valve.
 
 ## Generating the ISO
 
-Generating the ISO can be done with ``./gen.sh``. It will tell you if you are missing any dependencies.
+Generating the ISO from the git repo consists of multiple steps. You need to be on Debian Buster or VaporOS Buster to be able to do this.
 
-The ``gen.sh`` script downloads the base iso, extracts it, makes some changes and repackages it. It can be modified to work with any Debian based distribution.
+The first time the ISO is created the following steps will need to be taken:
+
+ - ``sudo apt-get update``
+ - ``sudo apt-get install debootstrap lftp rsync reprepro p7zip-full xorriso git``
+ - ``git clone https://github.com/sharkwouter/vaporos-buster.git``
+ - ``cd vaporos-buster``
+ - ``./add-packages.sh && /gen.sh``
+
+Executing the add-packages.sh and gen.sh scripts can take a while. The add-packages.sh script uses sudo to create and use a chroot.
+
+A second time ``./gen.sh`` should be the only command necessary. The ``./add-packages.sh`` command could be run again to if any changes are made to packages in the default.preseed or base_include files.
 
 ## Testing the base installation
 
