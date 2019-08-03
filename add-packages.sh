@@ -27,8 +27,10 @@ ADDITIONSDIR="${WORKDIR}/additions"
 GENSCRIPT="${WORKDIR}/gen.sh"
 CHROOTSCRIPT="${WORKDIR}/create-chroot.sh"
 
-# other variables:
+# Other variables:
 DEPS="7z rsync"
+ADDITIONALPACKAGES="task-desktop task-gnome-desktop"
+# Since we need tasksel tasks as well, which are not referenced in any file, some additional packages have been hardcoded here.
 
 #############
 # Functions #
@@ -98,7 +100,7 @@ getpackages ( ) {
 
 	# Download all packages needed
 	echo "Downloading packages.."
-	sudo chroot ${CHROOTDIR} apt-get install -d -y ${include} ${pkgsel}
+	sudo chroot ${CHROOTDIR} apt-get install -d -y ${include} ${pkgsel} ${ADDITIONALPACKAGES}
 
 	# Transfer them to the target directory
 	mkdir -p ${TARGETDIR}
