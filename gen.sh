@@ -46,8 +46,9 @@ usage ( )
 	cat <<EOF
 	$0 [OPTION]
 	-h		  Print this message
-	-d		  Only download ${STEAMINSTALLFILE}, then exit
-	-n		  Set the name for the iso
+	-d		  Only download the base ISO
+	-f		  Return filename of base ISO
+	-n		  Set the name for the ISO
 EOF
 }
 
@@ -227,7 +228,7 @@ createmd5sum ( ) {
 # Getopts #
 ###########
 #Setup command line arguments
-while getopts "hdn:" OPTION; do
+while getopts "hdfn:" OPTION; do
 	case ${OPTION} in
 	h)
 		usage
@@ -246,6 +247,10 @@ while getopts "hdn:" OPTION; do
 	n)
 		ISOVNAME="${OPTARG}"
 		ISONAME=$(echo "${OPTARG}.iso"|tr '[:upper:]' '[:lower:]'|tr "\ " "-")
+	;;
+	f)
+		echo "${ISOPATH}/${STEAMINSTALLFILE}"
+		exit 0
 	;;
 	*)
 		echo "${OPTION} - Unrecongnized option"
