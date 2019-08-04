@@ -116,14 +116,30 @@ For this project to work out a number of packages will need to be ported to Vapo
 
 - steamos-autoupdate
 - steamos-base-files? It may contain something we don't have yet. It has some configuration files and scripts in it.
-- steamos-updatelevel? Steam might use this to show OS version
-- steamos-packages? The dependencies of this packages will need to be installed
+- steamos-packages (The dependencies of this packages will need to be installed one way or another)
+
+#### steamos-packages
+
+This package is just there for dependencies, here is a list:
+
+- nvidia-driver
+- ttf-dejavu-core
+- xserver-xorg-video-amdgpu
+- mesa-vulkan-drivers
+- libegl-mesa0
+- nvidia-vdpau-driver:i386
+- libnvidia-encode1:i386
+- i965-va-driver:i396
+- libc6-i686:i386
+- nvidia-driver:i386
+- mesa-vulkan-drivers:i386
+- libegl-mesa0:i386
 
 ### Other missing parts
 
 What's also still missing are the following things:
 
-- Graphics drivers and the method to switch between them
+- Graphics drivers and the method to switch between them (check steamos-base-files)
 
 ### Not worth the effort
 
