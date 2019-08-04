@@ -120,6 +120,9 @@ createbasechroot ( ) {
 #Fininishing touches to the chroot
 finishchroot ( ) {
 	echo "deb http://deb.debian.org/debian/ buster main contrib non-free" > ${CHROOTPATH}/etc/apt/sources.list
+	echo "deb http://download.vaporos.net/vaporos/ buster main" >> ${CHROOTPATH}/etc/apt/sources.list
+	cp ${WORKDIR}/vaporos-archive-keyring.gpg ${CHROOTPATH}/usr/share/keyrings/vaporos-repo.gpg
+	cp ${WORKDIR}/vaporos-archive-keyring.gpg ${CHROOTPATH}/etc/apt/trusted.gpg.d/vaporos-repo.gpg
 	chroot ${CHROOTPATH} dpkg --add-architecture i386
 	chroot ${CHROOTPATH} apt-get update
 	chroot ${CHROOTPATH} apt-get clean
