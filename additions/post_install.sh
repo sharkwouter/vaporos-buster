@@ -42,7 +42,7 @@ then
     done
   fi
 
-  gnome-terminal -- sudo /usr/bin/install_steam.sh
+  gnome-terminal --hide-menubar -- sudo /usr/bin/install_steam.sh
 
   # Wait for the steam installation to finish
   while [ -f /usr/bin/install_steam.sh ]; do
@@ -82,8 +82,9 @@ echo ALL ALL=NOPASSWD: /usr/bin/post_logon.sh > /target/etc/sudoers.d/post_logon
 cat - > /target/usr/bin/install_steam.sh << 'EOF'
 #! /bin/bash
 echo "Installing Steam.."
-apt-get update && apt-get install -y steam
-rm /etc/sudoers.d/install_steam
+apt-get update && \
+apt-get install -y steam && \
+rm /etc/sudoers.d/install_steam && \
 rm /usr/bin/install_steam.sh
 EOF
 chmod +x /target/usr/bin/install_steam.sh
