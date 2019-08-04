@@ -105,6 +105,7 @@ VaporOS currently has some deviations from SteamOS which have one reason or anot
 - Some packages used to be in base_include, but are now in default.preseed because of bad dependency resolution for what's in base_include
 - GDM is installed, because excluding it isn't possible
 - VaporOS Buster uses the Debian repository for all packages except for a couple VaporOS specific ones. For those there is a repository. This gives users access to more packages and it is a lot easier to set up, but has a chance of causing headaches in the future
+- For some reason Gnome doesn't start on first boot. This is a bug and makes users need to be connected through a wired internet connection
 
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on, but do report them please.
