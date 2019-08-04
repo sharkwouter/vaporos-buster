@@ -124,7 +124,6 @@ GRUB_DEFAULT=saved
 GRUB_HIDDEN_TIMEOUT_QUIET=true
 GRUB_DISTRIBUTOR=\`lsb_release -i -s 2> /dev/null || echo Debian\`
 GRUB_CMDLINE_LINUX=""
-#GRUB_BACKGROUND=/usr/share/plymouth/themes/steamos/steamos_branded.png
 GRUB_DISABLE_LINUX_RECOVERY="true"
 GRUB_GFXMODE=auto
 EOF
