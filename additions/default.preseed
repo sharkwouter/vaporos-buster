@@ -115,7 +115,7 @@ d-i apt-setup/local0/source boolean true
 # d-i debian-installer/allow_unauthenticated boolean true
 
 # Individual additional packages to install
-d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 lightdm:amd64 dkms:amd64
+d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 steamos-modeswitch-inhibitor:i386 steamos-modeswitch-inhibitor:amd64 lightdm:amd64 dkms:amd64
 
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
@@ -186,12 +186,6 @@ d-i partman-auto/expert_recipe string                         \
                       use_filesystem{ } filesystem{ ext4 }    \
                       label { system }                        \
                       mountpoint{ / }                         \
-              .                                               \
-              10240 10240 10240 ext4                          \
-                      method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext4 }    \
-                      label { recovery }                      \
-                      mountpoint{ /boot/recovery }            \
               .                                               \
               10240 10240 10240 linux-swap                    \
                       method{ swap } format{ }                \
