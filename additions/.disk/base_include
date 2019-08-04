@@ -18,5 +18,8 @@ network-manager
 plymouth
 plymouth-themes
 steam-devices
+steamos-compositor
 sudo
 unattended-upgrades
+vaporos-archive-keyring
+vaporos-repo
