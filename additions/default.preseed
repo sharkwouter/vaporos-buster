@@ -115,7 +115,7 @@ d-i apt-setup/local0/source boolean true
 # d-i debian-installer/allow_unauthenticated boolean true
 
 # Individual additional packages to install
-d-i pkgsel/include string libc6:i386 libgl1-mesa-dri:i386 steamos-modeswitch-inhibitor:i386 steamos-modeswitch-inhibitor:amd64 lightdm:amd64 dkms:amd64
+d-i pkgsel/include string vaporos-base-files libc6:i386 libgl1-mesa-dri:i386 nvidia-vdpau-driver:i386 steamos-modeswitch-inhibitor:i386 steamos-modeswitch-inhibitor lightdm dkms libnvidia-encode1 i965-va-driver nvidia-driver ttf-dejavu-core xserver-xorg-video-amdgpu mesa-vulkan-drivers libegl-mesa0 i965-va-driver:i386 nvidia-driver-libs-i386 mesa-vulkan-drivers:i386 libegl-mesa0:i386
 
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
