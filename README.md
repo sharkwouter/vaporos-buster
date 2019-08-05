@@ -105,8 +105,6 @@ VaporOS currently has some deviations from SteamOS which have one reason or anot
 - Some packages used to be in base_include, but are now in default.preseed because of bad dependency resolution for what's in base_include
 - GDM is installed, because excluding it isn't possible
 - VaporOS Buster uses the Debian repository for all packages except for a couple VaporOS specific ones. For those there is a repository. This gives users access to more packages and it is a lot easier to set up, but has a chance of causing headaches in the future
-- For some reason Gnome doesn't start on first boot. This is a bug and makes users need to be connected through a wired internet connection
-
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on, but do report them please.
 
@@ -115,31 +113,14 @@ These deviations may change in the future, depending on the reason behind them. 
 For this project to work out a number of packages will need to be ported to VaporOS Buster:
 
 - steamos-autoupdate
-- steamos-base-files? It may contain something we don't have yet. It has some configuration files and scripts in it.
-- steamos-packages (The dependencies of this packages will need to be installed one way or another)
 
-#### steamos-packages
+### Known issues
 
-This package is just there for dependencies, here is a list:
+Currently there are some problems which are known:
 
-- nvidia-driver
-- ttf-dejavu-core
-- xserver-xorg-video-amdgpu
-- mesa-vulkan-drivers
-- libegl-mesa0
-- nvidia-vdpau-driver:i386
-- libnvidia-encode1:i386
-- i965-va-driver:i386
-- libc6-i686:i386
-- nvidia-driver:i386
-- mesa-vulkan-drivers:i386
-- libegl-mesa0:i386
-
-### Other missing parts
-
-What's also still missing are the following things:
-
-- Graphics drivers and the method to switch between them (check steamos-base-files)
+- Apparmor is disabled. It would prevent steamos-session from starting correctly
+- During the installation the screen will go black. It continues regardless, though, just wait it out
+- The installation crashes in Virtualbox
 
 ### Not worth the effort
 
