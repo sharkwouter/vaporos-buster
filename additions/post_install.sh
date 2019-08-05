@@ -13,6 +13,7 @@ cat - > /target/usr/share/lightdm/lightdm.conf.d/20_steamos.conf << 'EOF'
 pam-service=lightdm-autologin
 autologin-user=steam
 autologin-user-timeout=0
+autologin-session=gnome
 EOF
 
 chroot /target date > /target/etc/skel/.imageversion
@@ -65,6 +66,7 @@ systemctl enable build-dkms
 update-grub
 grub-set-default 0
 passwd --delete desktop
+sed -i '/autologin-session/d' /usr/share/lightdm/lightdm.conf.d/20_steamos.conf
 rm /etc/sudoers.d/post_logon
 rm /usr/bin/post_logon.sh && reboot
 rm /home/steam/.config/autostart/post_logon.desktop
