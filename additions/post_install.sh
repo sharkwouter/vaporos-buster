@@ -59,6 +59,8 @@ then
   sudo /usr/bin/post_logon.sh
   exit
 fi
+# Disable apparmor, otherwise nothing works
+systemctl disable --now apparmor.service
 dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User1000 org.freedesktop.Accounts.User.SetXSession string:gnome
 dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User1001 org.freedesktop.Accounts.User.SetXSession string:steamos
 systemctl enable build-dkms
