@@ -129,7 +129,7 @@ This package is just there for dependencies, here is a list:
 - libegl-mesa0
 - nvidia-vdpau-driver:i386
 - libnvidia-encode1:i386
-- i965-va-driver:i396
+- i965-va-driver:i386
 - libc6-i686:i386
 - nvidia-driver:i386
 - mesa-vulkan-drivers:i386
