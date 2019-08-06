@@ -21,5 +21,6 @@ steam-devices
 steamos-compositor
 sudo
 unattended-upgrades
+vaporos-autoupdate
 vaporos-archive-keyring
 vaporos-repo
