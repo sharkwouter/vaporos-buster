@@ -2,8 +2,6 @@
 
 SteamOS hasn't been updated to make use of the new features offered by new Debian releases. That's why I'm porting the SteamOS experience to the latest Debian release, Debian Buster. I call it VaporOS Buster.
 
-VaporOS Buster is still very early in development. That's why no release yet. Stay tuned!
-
 # Features
 
 VaporOS Buster offers the following features:
@@ -11,14 +9,15 @@ VaporOS Buster offers the following features:
 - Makes all games look full screen
 - No keyboard and mouse needed
 - Easy automated installation
+- Automatic updates
 - Switch to desktop mode from Steam
 - All the features of Debian Buster
 
 ## How to install
 
-In the future, releases will be listed under [releases](https://github.com/sharkwouter/vaporos-buster/releases), but VaporOS Buster is not quite ready yet. Watch this repo to see when it has been released.
+Releases are listed under [releases](https://github.com/sharkwouter/vaporos-buster/releases). Once you've downloaded the ISO, it can either be burned to a DVD or using a USB stick. For instructions on how to prepare your USB stick, I'll refer to [the instructions for SteamOS](https://github.com/ValveSoftware/SteamOS/wiki/Getting-Started#creating-a-usb-key).
 
-If you can't wait and want to test right now, scroll further and read how to build VaporOS Buster today.
+If you would like to see what is currently in development, you can also scroll further and read how to build VaporOS Buster from this repository.
 
 ## Building VaporOS Buster
 
@@ -108,19 +107,13 @@ VaporOS currently has some deviations from SteamOS which have one reason or anot
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on, but do report them please.
 
-### Packages which will need porting
-
-For this project to work out a number of packages will need to be ported to VaporOS Buster:
-
-- steamos-autoupdate
-
 ### Known issues
 
 Currently there are some problems which are known:
 
 - Apparmor is disabled. It would prevent steamos-session from starting correctly
 - During the installation the screen will go black. It continues regardless, though, just wait it out
-- The installation crashes in Virtualbox
+- The installation is only known to work on UEFI systems
 
 ### Not worth the effort
 
@@ -131,6 +124,6 @@ There are also some packages which don't seem to be very useful to me and probab
 - valve-archive-keyring (won't work)
 - libtxc-dxtn-s2tc0 (Mesa has support for this now, so it shouldn't be needed anymore)
 - plymouth-themes-steamos
-- patches to gnome which made the text huge and enabled desktop icons
+- patches to gnome which enable desktop icons
 
 I'm not a big fan of the astetic packages. I'd prefer VaporOS Buster to look more like standard Debian than like SteamOS. That way people can see the difference.
