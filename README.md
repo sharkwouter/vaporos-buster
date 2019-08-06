@@ -41,6 +41,8 @@ The previous parts of this document were also useful to developers, but from her
 
 The most important thing to know is that this project works by downloading the network installation ISO of Debian Buster, extracts it and puts it back together with our configuation. This sometimes works really well and sometimes it breaks horribly, that's what testing is for.
 
+If you have any questions, join [our Discord](https://discord.gg/qynSaKY).
+
 ### Files and directories
 
 What do the files and directories in this project do? Good question! Here you'll find the answer.
