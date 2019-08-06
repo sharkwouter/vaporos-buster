@@ -54,13 +54,17 @@ then
   touch ~/.steam/steam_install_agreement.txt
   # pass -exitsteam so steam doesn't actually run after bootstrapping
   steam -exitsteam
+
+  # Wait for steam to close
+  while test -d /proc/`cat /home/steam/.steampid`; do
+    sleep 1
+  done
+
   rm ~/.steam/starting
   cp ~/.local/share/Steam/steam_install_agreement.txt ~/.steam/steam_install_agreement.txt
   sudo /usr/bin/post_logon.sh
   exit
 fi
-# Disable apparmor, otherwise nothing works
-systemctl disable --now apparmor.service
 dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User1000 org.freedesktop.Accounts.User.SetXSession string:gnome
 dbus-send --system --type=method_call --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User1001 org.freedesktop.Accounts.User.SetXSession string:steamos
 systemctl enable build-dkms
@@ -86,7 +90,11 @@ echo ALL ALL=NOPASSWD: /usr/bin/post_logon.sh > /target/etc/sudoers.d/post_logon
 cat - > /target/usr/bin/install_steam.sh << 'EOF'
 #! /bin/bash
 echo "Installing Steam.."
-apt-get update && \
+apt-get update
+echo "Waiting for apt to unlock.."
+while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+   sleep 1
+done
 apt-get install -y steam && \
 rm /etc/sudoers.d/install_steam && \
 rm /usr/bin/install_steam.sh
@@ -101,7 +109,6 @@ echo ALL ALL=NOPASSWD: /usr/bin/install_steam.sh > /target/etc/sudoers.d/install
 #
 # Set post logon to run at the first logon
 #
-mkdir -p /target/home/steam/.config/autostart/
 cat - > /target/home/steam/.config/autostart/post_logon.desktop << 'EOF'
 [Desktop Entry]
 Type=Application
