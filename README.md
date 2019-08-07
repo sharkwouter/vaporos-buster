@@ -113,7 +113,7 @@ These deviations may change in the future, depending on the reason behind them. 
 
 Currently there are some problems which are known:
 
-- Apparmor is disabled. It would prevent steamos-session from starting correctly
+- Apparmor may cause issues, this needs more testing or disabling
 - During the installation the screen will go black. It continues regardless, though, just wait it out
 - The installation is only known to work on UEFI systems
 
