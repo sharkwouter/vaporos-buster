@@ -106,6 +106,7 @@ VaporOS currently has some deviations from SteamOS which have one reason or anot
 - Some packages used to be in base_include, but are now in default.preseed because of bad dependency resolution for what's in base_include
 - GDM is installed, because excluding it isn't possible
 - VaporOS Buster uses the Debian repository for all packages except for a couple VaporOS specific ones. For those there is a repository. This gives users access to more packages and it is a lot easier to set up, but has a chance of causing headaches in the future
+- Returning to Steam from the desktop mode can currently only be done by logging out or running the returntosteam.sh script manually
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on, but do report them please.
 
@@ -113,7 +114,11 @@ These deviations may change in the future, depending on the reason behind them. 
 
 Currently there are some problems which are known:
 
-- Apparmor may cause issues, this needs more testing or disabling
+- The SteamOS session doesn't work on the Alienware Steam Machine the first time it is started
+- Somehow my keyboard doesn't work in the SteamOS session
+- Controllers don't work right now
+- The nvidia-persistence.service crashes on startup
+- The systemd-module-load.server crashes on startup
 - During the installation the screen will go black. It continues regardless, though, just wait it out
 - The installation is only known to work on UEFI systems
 
