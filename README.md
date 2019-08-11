@@ -2,6 +2,8 @@
 
 SteamOS hasn't been updated to make use of the new features offered by new Debian releases. That's why I'm porting the SteamOS experience to the latest Debian release, Debian Buster. I call it VaporOS Buster.
 
+Because of issues with Steam which I wasn't able to fix after multiple days of troubleshooting, I have discontinued this project. I have released the last version I've build, which can be found on [the releases page](https://github.com/sharkwouter/vaporos-buster/releases). Currently Steam doesn't launch correctly, let me know if you find what is causing it. Meanwhile, I will keep the repository up with all the package sources.
+
 # Features
 
 VaporOS Buster offers the following features:
@@ -34,6 +36,14 @@ The first time the ISO is created the following steps will need to be taken:
 Executing the add-packages.sh and gen.sh scripts can take a while. The add-packages.sh script uses sudo to create and use a chroot.
 
 A second time ``./gen.sh`` should be the only command necessary. The ``./add-packages.sh`` command could be run again to if any changes are made to packages in the default.preseed or base_include files.
+
+## Known issues
+
+When using VaporOS Buster, you are likely to encounter these issues:
+
+- During installation the screen goes black. On UEFI systems you can just wait for it to finish, while on BIOS systems the installer won't be able to finish
+- A system with Intel graphics will probably boot to a black screen
+- Steam doesn't work like expected. It doesn't react to controller or keyboard input on my system and fails to start the the first time it is loaded on boot
 
 ## Developer information
 
@@ -88,6 +98,10 @@ The vaporos-archive-keyring.gpg file contains the public key of the VaporOS Bust
 
 The isohdpfx.bin file is used for generating the iso. You need it, otherwise the ISO might not boot.
 
+#### VaporOS specific packages
+
+There are a number of VaporOS specific packages which are included when the ISO is build. These packages and their source code can be found either [in this github repo](https://github.com/sharkwouter/vaporos-buster-repository) or [in the VaporOS repository](http://download.vaporos.net/vaporos/).
+
 ### Testing the base installation
 
 To test if the installer would succeed in the installing the base system the ``create-chroot.sh`` script can be run. This creates a chroot based on the buildroot directory. Make sure you run ``gen.sh`` before running this script. It has to be run as root.
@@ -109,18 +123,6 @@ VaporOS currently has some deviations from SteamOS which have one reason or anot
 - Returning to Steam from the desktop mode can currently only be done by logging out or running the returntosteam.sh script manually
 
 These deviations may change in the future, depending on the reason behind them. Assume all other differences from SteamOS haven't been looked into yet or are still being worked on, but do report them please.
-
-### Known issues
-
-Currently there are some problems which are known:
-
-- The SteamOS session doesn't work on the Alienware Steam Machine the first time it is started
-- Somehow my keyboard doesn't work in the SteamOS session
-- Controllers don't work right now
-- The nvidia-persistence.service crashes on startup
-- The systemd-module-load.server crashes on startup
-- During the installation the screen will go black. It continues regardless, though, just wait it out
-- The installation is only known to work on UEFI systems
 
 ### Not worth the effort
 
